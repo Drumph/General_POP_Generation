@@ -41,24 +41,24 @@ final_file_BH=$id_name"_final"
 final_file_TGP=$f1"_final"
 #Flip file 1 markers to file 2 markers
 #-First get a list of SNPs to flip
-/gpfs/barnes_share/Software/plink2 --bfile  $id_name --bmerge ${f1}.bed ${f1}.bim ${f1}.fam --make-bed --out $out_file
+/gpfs/barnes_share/Software/plink2 --bfile  /gpfs/barnes_share/testing/TGP_BARNES/part2/$id_name --bmerge /gpfs/barnes_share/testing/TGP_BARNES/part2/${f1}.bed /gpfs/barnes_share/testing/TGP_BARNES/part2/${f1}.bim /gpfs/barnes_share/testing/TGP_BARNES/part2/${f1}.fam --make-bed --out $out_file
 #-Then flip the markers
 if [ -e "${missing_file1}" ]
 then
-/gpfs/barnes_share/Software/plink2 --bfile  $id_name --flip $missing_file1 --make-bed --out  $missing_flipped
+/gpfs/barnes_share/Software/plink2 --bfile  /gpfs/barnes_share/testing/TGP_BARNES/part2/$id_name --flip $missing_file1 --make-bed --out  $missing_flipped
 else
-/gpfs/barnes_share/Software/plink2 --bfile  $id_name --make-bed --out $missing_flipped
+/gpfs/barnes_share/Software/plink2 --bfile /gpfs/barnes_share/testing/TGP_BARNES/part2/$id_name --make-bed --out $missing_flipped
 fi
 #-Are there any markers that cannot be merged after flip? If so, delete them from both data sets
 #remove the previous ".missnp" file
 #rm $missing_file1
-/gpfs/barnes_share/Software/plink2 --bfile  $missing_flipped --bmerge ${f1}.bed ${f1}.bim ${f1}.fam --make-bed --out $out_file2
+/gpfs/barnes_share/Software/plink2 --bfile  $missing_flipped --bmerge /gpfs/barnes_share/testing/TGP_BARNES/part2/${f1}.bed /gpfs/barnes_share/testing/TGP_BARNES/part2/${f1}.bim /gpfs/barnes_share/testing/TGP_BARNES/part2/${f1}.fam --make-bed --out $out_file2
 if [ -e "${missing_file2}" ]
 then
 /gpfs/barnes_share/Software/plink2 --bfile  $missing_flipped --exclude $missing_file2 --make-bed --out  $final_file_BH
-/gpfs/barnes_share/Software/plink2 --bfile  $f1 --exclude $missing_file2 --make-bed --out  $final_file_TGP
+/gpfs/barnes_share/Software/plink2 --bfile  /gpfs/barnes_share/testing/TGP_BARNES/part2/$f1 --exclude $missing_file2 --make-bed --out  $final_file_TGP
 else
 /gpfs/barnes_share/Software/plink2 --bfile  $missing_flipped --make-bed --out  $final_file_BH
-/gpfs/barnes_share/Software/plink2 --bfile  $f1 --make-bed --out  $final_file_TGP
+/gpfs/barnes_share/Software/plink2 --bfile  /gpfs/barnes_share/testing/TGP_BARNES/part2/$f1 --make-bed --out  $final_file_TGP
 fi
 fi
