@@ -1,2 +1,19 @@
-
 step3_flipping.sh
+###Overview####
+step2_extract.sh this script output's plink binary files
+making_bed.txt this script consists of file path of the raw TGP and bigham files
+
+
+###Description#####
+The making_bed.txt contains three columns the first column is the chromosome number, the the second column is the full path of raw Bigham binary data(bed,bim,fam) ,and the third column is  the full path of the raw TGP data.
+*** The "step3_flipping.sh" has the path mentioned, so the output is created in the path. The output of step2 is used as input files for this script make sure you have the right path in the script
+
+###Functions###
+The step3_flipping.sh does two things first it takes the output files of the first script and makes a snp list which are stored with extension "*_snpName_Bigham.txt" and "*_snpName_TGP.txt". Then, it makes use of this list to subset the raw files which are in "making_bed.txt" column one and column two and creates a binary files for each of the datasets.
+
+###Running the script###
+sbatch step3_flipping.sh
+
+###Output file###
+Intermediate files of flipping steps:/gpfs/barnes_share/testing/TGP_BARNES/part3/step1_2/
+Final Output file: /gpfs/barnes_share/testing/TGP_BARNES/part3/final_output/
