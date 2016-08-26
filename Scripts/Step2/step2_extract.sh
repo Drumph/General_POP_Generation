@@ -7,7 +7,6 @@
 #SBATCH --share 
 #SBATCH --mail-user=aniket.shetty@ucdenver.edu
 #SBATCH --mail-type=END
-#/gpfs/barnes_share/dcl01_data_aniket/data/Software/bcftools-1.2/bcftools merge -l list_files_vcf.txt -o chr1_merged.vcf
 export PERL5LIB=~/tools/vcftools_0.1.13/perl
 export PATH=~/tools/tabix-0.2.6:$PATH
 cd /gpfs/barnes_home/shettyan/scripts
@@ -29,7 +28,6 @@ if [ "$curr_var" != "" ]; then
 id_name=`echo $curr_var | awk 'END {print $1}'`     ### get each of the chromosome number
 f1=`echo $curr_var | awk 'END {print $2}'`
 f2=`echo $curr_var | awk 'END {print $3}'`
-
 name="chr"$id_name                                  ##### chromosome number saved to the variable
 filename=$(basename "$id_name")                            ### extracting filename from the path
 extension="${filename##*.}"                          ### extensions of the file
@@ -41,8 +39,8 @@ out_bigHAM=$id_name"_snpName_Bigham.txt"
 out_TGP=$id_name"_snpName_TGP.txt"
 final_bigHAM=$id_name"_subset_BigHAM_snp"
 final_TGP=$id_name"_subset_TGP_snp"
-cut -f2 $bigham_snp > $out_bigHAM
-cut -f2 $TGP_snp  > $out_TGP
+cut -f2 /gpfs/barnes_share/testing/TGP_BARNES/part1/$bigham_snp > $out_bigHAM  ##### gets the SNP's id's from the output of the first script
+cut -f2 /gpfs/barnes_share/testing/TGP_BARNES/part1/$TGP_snp  > $out_TGP ######### gets the SNP's id's from the output of the first script
 /gpfs/barnes_share/Software/plink2 --bfile $f1 --extract $out_bigHAM --make-bed --out $final_bigHAM
 /gpfs/barnes_share/Software/plink2 --bfile $f2 --extract $out_TGP --make-bed --out $final_TGP
 fi
